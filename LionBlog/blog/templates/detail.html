@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h3>{{post.title}}</h3>
+    {{post.date}}
+    <br />
+    {{post.body}}
+    <a href="{% url 'update_page' post.id %}">수정하기</a>
+    <a href="{% url 'delete' post.id %}">삭제하기</a>
+    <br />
+    <a href="{% url 'home' %}">홈으로 돌아가기</a>
+  </body>
+</html>
