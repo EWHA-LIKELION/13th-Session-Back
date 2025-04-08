@@ -1,0 +1,20 @@
+body{
+    background-color:peachpuff;
+    padding: 30px;
+}
+h1{
+    color:lightslategrey;
+    text-align: center;
+    border:2px dashed rgb(74, 158, 241);
+    padding: 10px;
+}
+h2{
+    color:lightslategrey;
+    text-align: center;
+}
+/* .list{
+
+}
+.container{ 
+
+} */
