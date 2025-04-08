@@ -1,5 +1,5 @@
 """
-URL configuration for firstproject project.
+URL configuration for blogproject project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.1/topics/http/urls/
@@ -16,12 +16,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from community.views import List, detail, question_detail, question_List
+
+import blog.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', List, name = "main"),
-    path('<int:pk>', detail, name = "detail"),
-    path('question/<int:pk>/', question_detail, name='question_detail'),
-
+    path('',blog.views.home, name='home'),
+    path('post/<int:post_id>', blog.views.detail, name="detail"),
+    path('new/', blog.views.new,name="new"),
+    path('create/', blog.views.create, name="create"),
+    path('delete/<int:post_id>', blog.views.delete, name='delete'),
+    path('update_page/<int:post_id>', blog.views.update_page,name='update_page'),
+    path('update/<int:post_id>', blog.views.update, name='update2'),
 ]
