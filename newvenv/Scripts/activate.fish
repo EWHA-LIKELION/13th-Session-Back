@@ -33,7 +33,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV 'C:\Users\mycom\Documents\LIKELION_13th_study\13th-Session-Back\newvenv'
+set -gx VIRTUAL_ENV 'C:\Users\mycom\Documents\Projects\13th-Session-Back\newvenv'
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/"Scripts $PATH

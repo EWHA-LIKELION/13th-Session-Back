@@ -1,0 +1,41 @@
+[33mcommit f002aeeb81aeee8c4cd3f5b744906e3bbf5654a6[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: gyk <ganada1375@gmail.com>
+Date:   Thu Mar 27 14:56:26 2025 +0900
+
+    html css 빼고 완성
+
+[33mcommit 106be74247ee2dc9f06b1c0a93cfa713200b8cb1[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: gyk <ganada1375@gmail.com>
+Date:   Thu Mar 27 00:01:37 2025 +0900
+
+    강제로 넣음
+
+[33mcommit 6fa45ba8300d3a5e0cad4ee1a10c6f89aa6d1ad4[m
+Author: gyk <ganada1375@gmail.com>
+Date:   Wed Mar 26 23:54:06 2025 +0900
+
+    김가영: 03-26
+
+[33mcommit 708696cf732898d97325606764b2edac3a915198[m
+Author: soli-ziyo <solac@ewha.ac.kr>
+Date:   Tue Feb 18 16:35:42 2025 +0900
+
+    docs: .gitignore 생성
+
+[33mcommit bd47c07b4e958e8134b28d65769eb696075a6565[m
+Author: soli-ziyo <solac@ewha.ac.kr>
+Date:   Tue Feb 18 16:34:56 2025 +0900
+
+    docs: .gitignore 생성
+
+[33mcommit 5d8660025b8acff97dff6e60419cdc41bd9b64a2[m
+Author: soli-ziyo <solac@ewha.ac.kr>
+Date:   Tue Feb 18 16:34:17 2025 +0900
+
+    docs: PR Template 생성
+
+[33mcommit 1fbe7df8942405b7c3af421eddf0d22be4b3cb2b[m
+Author: minsol <163154019+soli-ziyo@users.noreply.github.com>
+Date:   Tue Feb 18 16:10:04 2025 +0900
+
+    Initial commit
