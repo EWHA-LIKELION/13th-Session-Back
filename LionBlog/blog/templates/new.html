@@ -15,6 +15,7 @@
     <form action="{% url 'create' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{form.as_p}}
+        해시태그 <input type="text" name="hashtags" placeholder=",로 구분">
         <button type="submit">제출</button>
 
     </form>
