@@ -16,7 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+
 from blog.views import *
+from accounts.views import *
+
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,5 +32,9 @@ urlpatterns = [
     path('update_page/<int:post_id>', update_page, name='update_page'),
     path('update/<int:post_id>', update, name="update"),
     path('delete/<int:post_id>', delete, name='delete'),
-    path('<int:post_id>/comment', add_comment, name="add_comment")
+    path('<int:post_id>/comment', add_comment, name="add_comment"),
+
+    path('accounts/login', login_view, name="login"),
+    path('accounts/logout', logout_view, name="logout"),
+    path('accounts/signup', signup_view, name="signup")
 ]
