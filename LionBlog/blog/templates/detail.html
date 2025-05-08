@@ -11,6 +11,9 @@
     <br />
     {{post.body}}
     <br />
+    {% if post.photo %}
+    <img src="{{post.photo.url}}" width="200px" />
+    {% endif %}
     <div>{% for hashtag in post.hashtag.all %} #{{hashtag}} {% endfor %}</div>
     <a href="{% url 'update_page' post.id %}">수정하기</a>
     <a href="{% url 'delete' post.id %}">삭제하기</a>
