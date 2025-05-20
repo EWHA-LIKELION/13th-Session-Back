@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +27,7 @@ SECRET_KEY = 'django-insecure-+x%@o!dp=fry!!^(&gplnd7x#rov$wv00ny%h8!373@onif3w@
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+AUTH_USER_MODEL = 'accounts.CustomUser'
 
 # Application definition
 
@@ -38,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -118,6 +120,14 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+    os.path.join(BASE_DIR, 'blog', 'static'),
+]
+
+STATIC_ROOT = os.path.join('staticfiles')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
