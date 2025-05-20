@@ -1,7 +1,9 @@
 <h3>{{post.title}}</h3>
 {{post.date}}
 <br />
-{{post.body}}
+{{ post.body}} {% if post.photo %}
+<img src="{{ post.photo.url}}" alt="" height="200px;" />
+{% endif %}
 <br />
 <div>{% for hashtag in post.hashtag.all %} #{{ hashtag }} {% endfor %}</div>
 

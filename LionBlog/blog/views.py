@@ -1,12 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post, Hashtag
 from django.utils import timezone
-from .forms import Postform, Commentform
+from .forms import Postform, Commentform #form과 html 파일을 연결해주는 함수 작성
 
 def home(request):
   posts = Post.objects
   return render(request, 'home.html', {'posts':posts})
-
 
 def detail(request,post_id):
   post_detail=get_object_or_404(Post,pk=post_id)
@@ -57,8 +56,8 @@ def add_comment (request, post_id):
     if form.is_valid():
       comment = form.save(commit=False)
       comment.post = blog
-      comment.save ()
-      return redirect( 'detail', post_id)
+      comment.save()
+      return redirect('detail', post_id)
     
   else:
     form = Commentform()
