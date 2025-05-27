@@ -7,4 +7,6 @@ urlpatterns = [
   path('', PostList.as_view()),
   path('<int:pk>/', PostDetail.as_view()),
   path('create/', PostList.as_view()),
+  path('comments/', CommentView.as_view()),
+  path('comments/<int:pk>/', CommentDetail.as_view()),
 ]
