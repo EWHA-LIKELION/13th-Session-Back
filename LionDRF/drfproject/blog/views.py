@@ -6,11 +6,17 @@ from django.http import Http404
 from .models import *
 from .serializers import *
 from django.shortcuts import get_object_or_404
+from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 
 class PostList(views.APIView):
+<<<<<<< HEAD
   def get(self, request, format = None):
+=======
+  permission_classes = [IsAuthenticated]
+  def get(self, request, format=None):
+>>>>>>> parent of b706f14 (Revert "김연우:250527")
     post = Post.objects.all()
     serializer = PostSerializer(post, many = True)
     return Response(serializer.data)
@@ -21,6 +27,7 @@ class PostList(views.APIView):
       serializer.save()
       return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+  
 
 class PostDetail(views.APIView):
   def get_object(self, pk):
@@ -46,3 +53,13 @@ class PostDetail(views.APIView):
     post= get_object_or_404(Post, pk=pk)
     post.delete()
     return Response({"message":"게시물 삭제 성공"})
+  
+
+class Comment(views.APIView):
+  def post(self, request, format=None):
+    serializer=CommentSerializer(data=request.data)
+    if serializer.is_valid():
+      serializer.save()
+      return Response(serializer.data)
+    return Response(serializer.errors)
+  
