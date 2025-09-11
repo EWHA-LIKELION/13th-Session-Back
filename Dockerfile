@@ -5,7 +5,7 @@ RUN mkdir /app
 WORKDIR /app
 
 # dependencies for psycopg2-binary
-RUN apk update && apk add python3 python3-dev mysql-dev build-base && pip3 install mysqlclient==2.2.4 && apk del python3-dev mysql-dev build-base
+RUN apk update && apk add python3 python3-dev mysql-dev build-base netcat-openbsd && pip3 install mysqlclient==2.2.4 && apk del python3-dev mysql-dev build-base
 
 
 # By copying over requirements first, we make sure that Docker will cache
