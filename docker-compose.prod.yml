@@ -10,7 +10,7 @@ services:
       DJANGO_SETTINGS_MODULE: drfproject.settings.prod
       TZ: "Asia/Seoul"
     env_file:
-      - .env.prod          # 운영용이면 .env.prod 권장
+      - .env       # 운영용이면 .env.prod 권장
     volumes:
       - static:/home/app/web/static
       - media:/home/app/web/media
