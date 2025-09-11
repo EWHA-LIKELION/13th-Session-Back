@@ -22,11 +22,11 @@ services:
     command: sh -c "python manage.py migrate --settings=project.settings.dev && python manage.py runserver 0.0.0.0:8000  --settings=project.settings.dev"
     environment:
       MYSQL_ROOT_PASSWORD: mysql
-      DATABASE_NAME: mysql
       DATABASE_USER: "root"
       DATABASE_PASSWORD: mysql
-      DATABASE_PORT: 3306
       DATABASE_HOST: db
+      DATABASE_PORT: 3306
+      DATABASE_NAME: mysql
       DJANGO_SETTINGS_MODULE: project.settings.dev
     restart: always
     ports:
