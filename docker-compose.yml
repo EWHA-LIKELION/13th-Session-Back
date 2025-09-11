@@ -1,0 +1,42 @@
+version: "3"
+services:
+  db:
+    container_name: db
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_USER: "user"
+      MYSQL_PASSWORD: "password"
+      MYSQL_DATABASE: "main"
+    expose:
+      - 3306
+    ports:
+      - "3307:3306"
+    env_file:
+      - .env
+    volumes:
+      - dbdata:/var/lib/mysql
+
+  web:
+    container_name: web
+    build: .
+    command: sh -c "while ! nc -z db 3306; do echo 'Waiting for DB...'; sleep 1; done; python manage.py migrate --settings=project.settings.dev && python manage.py runserver 0.0.0.0:8000 --settings=project.settings.dev"
+    environment:
+      DATABASE_USER: "user"
+      DATABASE_PASSWORD: "password"
+      DATABASE_HOST: db
+      DATABASE_PORT: 3306
+      DATABASE_NAME: "main"
+      DJANGO_SETTINGS_MODULE: project.settings.dev
+    restart: always
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+volumes:
+  app:
+  dbdata:
