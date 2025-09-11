@@ -19,7 +19,7 @@ jobs:
     steps:
     # GitHub 리포지토리를 체크아웃
     - name: checkout
-      uses: actions/checkout@master
+      uses: actions/checkout@v4
 	
 		# Action Secret에 설정한 ENV_VARS 값을 .env 파일로 만듦
     - name: create env file
