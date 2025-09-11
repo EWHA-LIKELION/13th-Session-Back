@@ -14,6 +14,9 @@ class SignUpView(views.APIView):
             return Response({'message':'회원가입 성공', 'data':serializer.data})
         return Response({'message':'회원가입 실패', 'error':serializer.errors})
     
+
+
+    
 class LoginView(views.APIView):
     serializer_class=UserLoginSerializer
     def post(self, request):
