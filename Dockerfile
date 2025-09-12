@@ -13,24 +13,24 @@ RUN apk add --no-cache \
     libffi \
     libjpeg-turbo \
     zlib \
-    mariadb-connector-c        # ★ mysqlclient 런타임 의존성
+    mariadb-connector-c
 
 # 의존성 먼저 복사 (캐시 최적화)
 COPY requirements.txt /app/requirements.txt
 
 # 빌드시에만 필요한 헤더/툴
 RUN apk add --no-cache --virtual .build-deps \
-        build-base \
-        libffi-dev \
-        openssl-dev \
-        jpeg-dev \
-        zlib-dev \
-        mariadb-connector-c-dev \  # ★ mysqlclient 빌드 의존성
-        pkgconf                    # ★ pkg-config 제공 \
-    && python -m pip install --upgrade pip setuptools wheel \
-    && pip --version \
-    && pip install --no-cache-dir -r /app/requirements.txt \
-    && apk del .build-deps
+    build-base \
+    libffi-dev \
+    openssl-dev \
+    jpeg-dev \
+    zlib-dev \
+    mariadb-connector-c-dev \
+    pkgconf \
+ && python -m pip install --upgrade pip setuptools wheel \
+ && pip --version \
+ && pip install --no-cache-dir -r /app/requirements.txt \
+ && apk del .build-deps
 
 # 앱 소스
 COPY . /app/
