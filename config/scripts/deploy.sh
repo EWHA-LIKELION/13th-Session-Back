@@ -1,34 +1,29 @@
-#!/bin/sh
-set -eu
+#!/usr/bin/env bash
+set -euo pipefail
 
 APP_DIR="/home/ubuntu/srv/ubuntu"
-CD="docker compose"
-PROJ="-p ubuntu"
-FILE="-f $APP_DIR/docker-compose.prod.yml"
-
 cd "$APP_DIR"
-echo "[i] PWD=$(pwd)"
 
-$CD $FILE $PROJ config | sed -n '1,120p'
+# compose 최종 확인
+sudo docker compose config | sed -n '1,120p'
 
 echo "== BUILD WEB =="
-# 로그를 파일로 저장하되 종료코드 정확히 받기
-if ! $CD $FILE $PROJ build web --no-cache --progress=plain > build.log 2>&1; then
+# --progress는 compose 뒤에 둔다
+if ! sudo docker compose --progress=plain -f docker-compose.prod.yml -p ubuntu build web --no-cache | tee build.log ; then
   echo "[X] BUILD FAILED"
   tail -n 120 build.log || true
   exit 1
 fi
-tail -n 20 build.log || true
 
 echo "== UP =="
-if ! $CD $FILE $PROJ up -d; then
+if ! sudo docker compose -f docker-compose.prod.yml -p ubuntu up -d ; then
   echo "[X] UP FAILED"
-  $CD $FILE $PROJ ps || true
-  $CD $FILE $PROJ logs --no-color --tail=200 || true
+  sudo docker compose -f docker-compose.prod.yml -p ubuntu ps || true
+  sudo docker compose -f docker-compose.prod.yml -p ubuntu logs --no-color --tail=200 || true
   exit 1
 fi
 
-$CD $FILE $PROJ ps
-$CD $FILE $PROJ logs web --no-color --tail=200 || true
-$CD $FILE $PROJ logs nginx --no-color --tail=200 || true
+sudo docker compose -f docker-compose.prod.yml -p ubuntu ps
+sudo docker compose -f docker-compose.prod.yml -p ubuntu logs web --no-color --tail=200 || true
+sudo docker compose -f docker-compose.prod.yml -p ubuntu logs nginx --no-color --tail=200 || true
 echo "[✓] Deploy done."
