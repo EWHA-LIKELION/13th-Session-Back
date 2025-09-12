@@ -1,0 +1,40 @@
+
+services:
+  web:
+    container_name: web
+    build:
+      context: ./
+      dockerfile: Dockerfile        # ← 루트에 실제 있는 파일명으로!
+    command: gunicorn drfproject.wsgi:application --bind 0.0.0.0:8000
+    environment:
+      DJANGO_SETTINGS_MODULE: drfproject.settings.prod
+      TZ: "Asia/Seoul"
+    env_file:
+      - .env
+    volumes:
+      - static:/home/app/web/static
+      - media:/home/app/web/media
+    expose:
+      - "8000"
+    entrypoint:
+      - sh
+      - /app/config/docker/entrypoint.prod.sh  # ← 이 파일이 진짜 존재하는지도 확인!
+
+  nginx:
+    container_name: nginx
+    build:
+      context: ./config/nginx
+      dockerfile: Dockerfile.prod   # ← 여긴 prod 파일이 실제로 있으므로 명시
+    volumes:
+      - static:/home/app/web/static
+      - media:/home/app/web/media
+    ports:
+      - "80:80"
+    depends_on:
+      - web
+    environment:
+      TZ: "Asia/Seoul"
+
+volumes:
+  static:
+  media:
