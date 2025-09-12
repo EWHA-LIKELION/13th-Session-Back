@@ -1,35 +1,33 @@
-#!/usr/bin/env bash
-set -euo pipefail
+#!/bin/sh
+set -eu
 
 APP_DIR="/home/ubuntu/srv/ubuntu"
-CD="docker compose"   # v2 기준, v1 쓰면 'docker-compose'로 교체
+CD="docker compose"
 PROJ="-p ubuntu"
 FILE="-f $APP_DIR/docker-compose.prod.yml"
 
 cd "$APP_DIR"
 echo "[i] PWD=$(pwd)"
 
-# 0) 참고: compose config 최종 확인
 $CD $FILE $PROJ config | sed -n '1,120p'
 
-# 1) 빌드(캐시·예쁜로그 끄고 실패 지점 그대로 노출)
 echo "== BUILD WEB =="
-if ! $CD $FILE $PROJ build web --no-cache --progress=plain | tee build.log ; then
-  echo "[X] BUILD FAILED (exit $?)"
-  tail -n 120 build.log
+# 로그를 파일로 저장하되 종료코드 정확히 받기
+if ! $CD $FILE $PROJ build web --no-cache --progress=plain > build.log 2>&1; then
+  echo "[X] BUILD FAILED"
+  tail -n 120 build.log || true
   exit 1
 fi
+tail -n 20 build.log || true
 
-# 2) 컨테이너 기동
 echo "== UP =="
-if ! $CD $FILE $PROJ up -d ; then
-  echo "[X] UP FAILED (exit $?)"
-  $CD $FILE $PROJ ps
-  $CD $FILE $PROJ logs --no-color --tail=200
+if ! $CD $FILE $PROJ up -d; then
+  echo "[X] UP FAILED"
+  $CD $FILE $PROJ ps || true
+  $CD $FILE $PROJ logs --no-color --tail=200 || true
   exit 1
 fi
 
-# 3) 상태 및 초기 로그
 $CD $FILE $PROJ ps
 $CD $FILE $PROJ logs web --no-color --tail=200 || true
 $CD $FILE $PROJ logs nginx --no-color --tail=200 || true
