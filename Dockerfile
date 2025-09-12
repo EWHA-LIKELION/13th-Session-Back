@@ -32,6 +32,8 @@ RUN apk add --no-cache --virtual .build-deps \
  && pip install --no-cache-dir -r /app/requirements.txt \
  && apk del .build-deps
 
+RUN chmod +x config/docker/entrypoint.prod.sh
+
 # 앱 소스
 COPY . /app/
 
