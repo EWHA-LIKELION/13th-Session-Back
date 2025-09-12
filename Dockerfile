@@ -1,13 +1,8 @@
-# -------- Base ----------
 FROM python:3.11-alpine
-
-ENV PYTHONUNBUFFERED=1 \
-    PIP_DISABLE_PIP_VERSION_CHECK=1 \
-    PIP_NO_CACHE_DIR=1
-
+ENV PYTHONUNBUFFERED=1 PIP_DISABLE_PIP_VERSION_CHECK=1 PIP_NO_CACHE_DIR=1 PIP_ROOT_USER_ACTION=ignore
 WORKDIR /app
 
-# 런타임 라이브러리 (Pillow/cryptography/mysqlclient용)
+# 런타임 라이브러리
 RUN apk add --no-cache \
     openssl \
     libffi \
@@ -15,28 +10,18 @@ RUN apk add --no-cache \
     zlib \
     mariadb-connector-c
 
-# 의존성 먼저 복사 (캐시 최적화)
+# 의존성 설치
 COPY requirements.txt /app/requirements.txt
-
-# 빌드시에만 필요한 헤더/툴
 RUN apk add --no-cache --virtual .build-deps \
-    build-base \
-    libffi-dev \
-    openssl-dev \
-    jpeg-dev \
-    zlib-dev \
-    mariadb-connector-c-dev \
-    pkgconf \
+      build-base libffi-dev openssl-dev jpeg-dev zlib-dev \
+      mariadb-connector-c-dev pkgconf \
  && python -m pip install --upgrade pip setuptools wheel \
- && pip --version \
  && pip install --no-cache-dir -r /app/requirements.txt \
  && apk del .build-deps
 
-RUN chmod +x config/docker/entrypoint.prod.sh
-
-# 앱 소스
+# ★ 앱 소스 먼저 복사
 COPY . /app/
 
-# 필요시 실행 커맨드/포트 (compose에서 지정하므로 보통 주석)
-# EXPOSE 8000
-# CMD ["gunicorn", "drfproject.wsgi:application", "--bind", "0.0.0.0:8000"]
+# ★ 복사된 파일에 권한 부여 (절대경로 추천)
+RUN test -f /app/config/docker/entrypoint.prod.sh \
+ && chmod +x /app/config/docker/entrypoint.prod.sh
