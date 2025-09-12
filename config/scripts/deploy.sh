@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -eu
 
 APP_DIR="/home/ubuntu/srv/ubuntu"
 cd "$APP_DIR"
