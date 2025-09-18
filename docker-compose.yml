@@ -1,0 +1,38 @@
+version: '3'
+services:
+
+  db:
+    container_name: db
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    expose:
+      - "5432"
+    volumes:
+      - "./pgdata:/var/lib/postgresql/data"
+    environment:
+      - POSTGRES_DB=db
+      - POSTGRES_USER=root 
+      - POSTGRES_PASSWORD=1375
+      - "PGDATA=/var/lib/postgresql/data/pgdata"
+
+  web:
+    container_name: web
+    build: .
+    command: sh -c "python manage.py migrate --settings=drfproject.settings.dev && python manage.py runserver 0.0.0.0:8000  --settings=drfproject.settings.dev"
+    environment:
+      - POSTGRES_DB=db
+      - POSTGRES_USER=root 
+      - POSTGRES_PASSWORD=1375
+      - "PGDATA=/var/lib/postgresql/data/pgdata"
+    restart: always
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+volumes:
+  app:
+  dbdata:
