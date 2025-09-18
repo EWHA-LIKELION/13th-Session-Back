@@ -12,6 +12,7 @@ media
 .env
 .venv
 .newvenv
+.env.prod
 env/
 venv/
 newvenv/
